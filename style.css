@@ -1,0 +1,95 @@
+/*   
+Theme Name: GGStyle
+Theme URI: http://www.greengraphics.com.au/
+Description: Nice theme. 
+Author: Nathan
+Author URI: http://www.greengraphics.com.au/
+Version: 1.0.2
+*/
+
+* {-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; transition:all ease 0.3s; -webkit-transition:all ease 0.3s; -moz-transition:all ease 0.3s;}
+
+html, body {margin:0;padding:0; height:100%;}
+body {
+	background:#f9f9f7;
+	font-size:62.5%;	
+	font-weight:400;
+	font-family:Helvetica, Arial, Sans-Serif;
+	color:#303030;
+	}
+	
+p {margin:0 0 1.6em 0; font-size:1.3em; line-height:1.4em;}
+
+a {text-decoration:none; color:#3d9fbc;}
+
+img {border:0; max-width:100%; height:auto;}
+iframe {max-width:100%;}
+
+.alignleft {float:left;}
+.alignright {float:right;}
+.aligncenter {text-align:center;}
+
+:focus, :active {outline:none;}
+
+.clearer:after {display:block; visibility:hidden; height:0; clear:both; content:'.';}
+
+h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a {
+	padding: 0;
+	font-weight: normal;
+	margin:0 0 2.4em 0;
+	font-size:2.0em;
+}
+
+.wrapper {
+	margin: 0px auto;
+	padding: 0;
+	max-width: 1000px;
+}
+
+/***********************
+***** HEADER STUFF *****
+***********************/
+header {width: 100%; background: white;}
+
+#logo {padding:1.6em; float:left;}
+
+#menu-bit {display:none;}
+.menu {width:100%; background:#1c6258;}
+.menu ul {max-width:1000px; margin:0 auto; margin:0; padding:0; text-align: right;}
+.menu ul li {display:inline-block; border-left:1px solid white;}
+.menu ul li a {display:block; padding:1em; color:white; font-size:1.2em;}
+.menu ul li:first-of-type {border:none;}
+.menu ul li:last-of-type {padding-right:0;}
+
+
+/***********************
+***** BODY STUFF *******
+***********************/
+section {padding:1em; position:relative;}
+
+article {}
+
+
+/***********************
+**** SIDEBAR STUFF *****
+***********************/
+aside {
+	padding:0;
+	float: right;
+	color: #414042;
+	width:30%;
+	min-width: 200px;
+}
+
+
+/***********************
+**** FOOTER STUFF ******
+***********************/
+footer {
+	clear: both; 
+	width: 100%;
+	padding:1em;
+	text-align: right;
+	background: #272727;
+	color: #fff;
+}
