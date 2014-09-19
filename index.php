@@ -6,7 +6,7 @@
 			
 	<article class="entry">
 	
-		<h1><?php the_title(); ?></h1> 
+		<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1> 
 	
 		<div class="the_content">
 
@@ -19,13 +19,12 @@
 <?php endwhile; else : ?>
 	
 	<article class="entry">
-		<h2>Not Found</h2>
+		<h2>Page not found</h2>
 		<div class="the_content">
-		<p>Sorry we can't find what anything that matches your search.</p>
-		<p>You could try another search or browse our categories.</p>
+		<p>Sorry we can't find that.</p>
+		<p>You could try another search or <a href="<?php bloginfo('home'); ?>">return to our homepage</a>.</p>
 		<?php get_search_form(); ?>
 		</div><!--end the_content-->
-		<ul><?php wp_list_categories('title_li=<h2>Categories</h2>'); ?></ul>
 	</article><!--end entry-->
 
 <?php endif; ?>
