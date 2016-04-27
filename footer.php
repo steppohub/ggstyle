@@ -1,17 +1,20 @@
-<footer class="clearer">
-	
-	<div class="footer-credits">
+<footer class="footer">
 
-	<p>
-	All content &copy; <a href="<?php bloginfo('home'); ?>"><?php bloginfo('name'); ?></a> <?php echo date('Y'); ?> | <a href="<?php bloginfo('home'); ?>/privacy-policy">Privacy Policy</a> | <a href="<?php bloginfo('home'); ?>/disclaimer">Disclaimer</a> | <a href="<?php bloginfo('home'); ?>">Other Stuff</a> 
-	</p>
+<div class="container">
+    <p class="alignleft">&copy; Copyright 2016, <a href="<?php echo esc_url(home_url()); ?>">Volunteers for Libraries</a>. All rights reserved.</p>
+    
+    <nav class="footerMenu">
+        <h4 class="footerMenu__title">Menu</h4>
+        <?php wp_nav_menu('container=&menu_class=footerMenu__list'); ?>
+    </ul>
+    
+</div>
 
-	</div>
+</footer><!-- .footer -->
 
-	<?php wp_footer(); ?>
 
-</footer><!--end footer-->
+<?php wp_footer(); ?>
 
-</div><!--end wrapper-->
+
 </body>
 </html>

@@ -1,38 +1,90 @@
 <?php get_header(); ?>
 
-<section id="content">
+<main class="main">
 
-	<article class="entry">
+<div class="main__top">
 
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<?php 
+    if (is_post_type_archive('tools') || is_tax('tools_cat') || is_tax('tools_tags')) {
+		
+		echo "<a class='USLink popmake-37'>Click here to view the US versions of these documents.</a>";
+	
+	} elseif (is_post_type_archive('descriptions') || is_tax('descriptions_cat') || is_tax('descriptions_tags')) {
+		
+		echo "<a class='USLink popmake-56'>Click here to view the US versions of these documents.</a>";
+ 
+    } elseif (is_post_type_archive('materials') || is_tax('materials_cat') || is_tax('materials_tags')) {
+		
+		echo "<a class='USLink popmake-59'>Click here to view the US versions of these documents.</a>";
+	 
+    } 
+
+	$post = get_post(5);
+	echo apply_filters('the_content', $post->post_content);
+?>	
+
+</div>
+
+<?php
+    echo "<div class='left'>"; 	  	
+
+    	     	
+		if (have_posts()) : while (have_posts()) : the_post(); 		
+
+
+        echo '<article class="content content--post">';
+
+
+            echo "<a class='post post--gallery' href='".get_the_permalink()."'><h2 class='post__title'>".get_the_title()."</h2></a>";
+            
+            the_excerpt();
+            
+
+        echo '</article>';
+
+
+        endwhile; 
+    ?>
+		
+		<div class="paginate">
+		
+		<?php
+			global $wp_query;
 			
-
-		<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1> 
-	
-		<div class="the_content">
-
-		<?php the_content('Continue Reading &raquo;'); ?>
+			$big = 999999999; // need an unlikely integer
+			
+			echo paginate_links( array(
+				'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+				'format' => '?paged=%#%',
+				'current' => max( 1, get_query_var('paged') ),
+				'total' => $wp_query->max_num_pages
+			) );
+		?>
 		
-		</div><!--end the_content-->
+		</div>
+
+
+
+	<?php else : ?>
+
+        <article class="content content--none">
+
+    		<h2 class="post__title">Not Found</h2>
+    		
+    		<p>Nothing here yet!</p>
+    		<p>Stay tuned for content soon...</p>
 		
-
-<?php endwhile; else : ?>
+        </article>
 	
-		<h2>Page not found</h2>
-		<div class="the_content">
-		<p>Sorry we can't find that.</p>
-		<p>You could try another search or <a href="<?php bloginfo('home'); ?>">return to our homepage</a>.</p>
-		<?php get_search_form(); ?>
-		</div><!--end the_content-->
+	<?php endif; ?>
+	
 
-<?php endif; ?>
-
-	</article><!--end entry-->
-
-<?php get_sidebar(); ?>
-
-<div class="clearer"></div>
-
-</section><!--end content-->
+    </div>
+	
+	
+	<?php get_sidebar(); ?>
+		
+	
+</main><!-- .main -->
 
 <?php get_footer(); ?>
