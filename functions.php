@@ -1,48 +1,52 @@
 <?php
 /**
-  * Include custom php files
-  */
-include('inc/gg_theme_functions.php');
-include('inc/gg_post_types.php');
+ * ggstyle functions and definitions.
+ *
+ * @link https://developer.wordpress.org/themes/basics/theme-functions/
+ *
+ * @package ggstyle
+ */
 
-
-
-
-function gg_setup() {
-    
+if ( ! function_exists( 'ggstyle_setup' ) ) :
+/**
+ * Sets up theme defaults and registers support for various WordPress features.
+ *
+ * Note that this function is hooked into the after_setup_theme hook, which
+ * runs before the init hook. The init hook is too late for some features, such
+ * as indicating support for post thumbnails.
+ */
+function ggstyle_setup() {
 	/*
 	 * Make theme available for translation.
 	 * Translations can be filed in the /languages/ directory.
-	 */    
+	 * If you're building a theme based on ggstyle, use a find and replace
+	 * to change 'ggstyle' to the name of your theme in all the template files.
+	 */
 	load_theme_textdomain( 'ggstyle', get_template_directory() . '/languages' );
-	
-	
+
+	// Add default posts and comments RSS feed links to head.
+	add_theme_support( 'automatic-feed-links' );
+
 	/*
 	 * Let WordPress manage the document title.
 	 * By adding theme support, we declare that this theme does not use a
 	 * hard-coded <title> tag in the document head, and expect WordPress to
 	 * provide it for us.
-	 */	
-    add_theme_support( 'title-tag' );
-     
-     
-    /*
+	 */
+	add_theme_support( 'title-tag' );
+
+	/*
 	 * Enable support for Post Thumbnails on posts and pages.
 	 *
-	 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
+	 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 	 */
 	add_theme_support( 'post-thumbnails' );
-	set_post_thumbnail_size( 1200, 0, true );  
-	
-	
-	// This theme uses wp_nav_menu() in locations.
-    register_nav_menus( 
-        array(
-            'primary' => __( 'Primary Navigation', 'ggstyle' ),
-        ) 
-    ); 
-    
-    
+
+	// This theme uses wp_nav_menu() in one location.
+	register_nav_menus( array(
+		'primary' => esc_html__( 'Primary', 'ggstyle' ),
+	) );
+
 	/*
 	 * Switch default core markup for search form, comment form, and comments
 	 * to output valid HTML5.
@@ -54,144 +58,160 @@ function gg_setup() {
 		'gallery',
 		'caption',
 	) );
-	
-	
-    /*
-	 * This theme styles the visual editor to resemble the theme style,
-	 * specifically font, colors, icons, and column width.
+
+	/*
+	 * Enable support for Post Formats.
+	 * See https://developer.wordpress.org/themes/functionality/post-formats/
 	 */
-	add_editor_style( array( 'css/editor-style.css' ) );
+	add_theme_support( 'post-formats', array(
+		'aside',
+		'image',
+		'video',
+		'quote',
+		'link',
+	) );
+
+	// Set up the WordPress core custom background feature.
+	add_theme_support( 'custom-background', apply_filters( 'ggstyle_custom_background_args', array(
+		'default-color' => 'ffffff',
+		'default-image' => '',
+	) ) );
+}
+endif;
+add_action( 'after_setup_theme', 'ggstyle_setup' );
+
+/**
+ * Set the content width in pixels, based on the theme's design and stylesheet.
+ *
+ * Priority 0 to make it available to lower priority callbacks.
+ *
+ * @global int $content_width
+ */
+function ggstyle_content_width() {
+	$GLOBALS['content_width'] = apply_filters( 'ggstyle_content_width', 640 );
+}
+add_action( 'after_setup_theme', 'ggstyle_content_width', 0 );
+
+/**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function ggstyle_widgets_init() {
+	register_sidebar( array(
+		'name'          => esc_html__( 'Sidebar', 'ggstyle' ),
+		'id'            => 'sidebar-1',
+		'description'   => esc_html__( 'Add widgets here.', 'ggstyle' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	) );
+}
+add_action( 'widgets_init', 'ggstyle_widgets_init' );
+
+/**
+ * Enqueue scripts and styles.
+ */
+function ggstyle_scripts() {
+	wp_enqueue_style( 'ggstyle-style', get_stylesheet_uri() );
+
+	wp_enqueue_script( 'ggstyle-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+
+	wp_enqueue_script( 'ggstyle-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'ggstyle_scripts' );
+
+
+function ggstyle_register_post_types() {
+	$labels = array(
+		"name"          => __( 'Projects', 'ggstyle' ),
+		"singular_name" => __( 'Project', 'ggstyle' ),
+	);
+	$args = array(
+		"labels" => $labels,
+		"public" => true,
+		"show_ui" => true,
+		"has_archive" => true,
+		"show_in_menu" => true,
+		"capability_type" => "post",
+		"hierarchical" => false,				
+		"supports" => array( "title", "editor", "revisions" ),				
+	);
+	register_post_type( "projects", $args );
 	
-	
-    /*
-     * Set Max width for content in theme eg. embeds & images
-     */
-    if ( ! isset( $content_width ) ) {
-    	$content_width = 960;
-    }
-    
-    
-    /*
-     * Add image sizes
-     */
-    add_image_size( 'slideL', 2000, 300, true );
-    add_image_size( 'slideM', 1024, 300, true );
-    add_image_size( 'slideS', 680 , 300, true );    
+	$cat_labels = array(
+        'name'          => _x( 'Projects Categories', 'taxonomy general name' ),
+		'singular_name' => _x( 'Projects Category', 'taxonomy singular name' ),	
+	);
+	$cat_args = array(
+    	'labels' => $cat_labels,
+        'rewrite' => array( 'slug' => 'projects-cat' ),
+		'hierarchical' => true,    	
+	);
+	register_taxonomy( 'projects_cat', 'projects', $cat_args );
 }
-add_action('after_setup_theme', 'gg_setup');
+add_action( 'init', 'ggstyle_register_post_types' );
 
 
-
-
-function gg_scripts() {
-  
-    wp_enqueue_style('googleFonts', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,700,700italic');
-  
-	wp_enqueue_style('themeStyle', get_stylesheet_uri());
-  
-  
-    // Load the html5 shiv.
-	wp_enqueue_script( 'gg-html5', get_template_directory_uri() . '/js/html5shiv.js', array(), '3.7.3' );
-	wp_script_add_data( 'gg-html5', 'conditional', 'lt IE 9' );    
-    
-
-	wp_enqueue_script( 'jquery' );
-	
-	wp_enqueue_script( 'flexslider', get_template_directory_uri().'/js/jquery.flexslider-min.js', array('jquery'), '2.7.1', true );
-	
-	wp_enqueue_script( 'general', get_template_directory_uri() . '/js/general.js', array('jquery'), '1.0.0', true );
+function ggstyle_remove_menus() {
+  remove_menu_page( 'edit-comments.php' );          //Comments
+  remove_menu_page( 'link-manager.php' );           //Links
 }
-add_action('wp_enqueue_scripts', 'gg_scripts');
+add_action( 'admin_menu', 'ggstyle_remove_menus' );
 
 
-
-
-function gg_body_classes($classes) {
-    global $post; 
-    if($post) $classes[] = $post->post_name;
-    return $classes;
+function ggstyle_change_post_menu_label() {
+    global $menu;
+    global $submenu;
+    $menu[5][0] = 'News';
+    $submenu['edit.php'][5][0] = 'News';
+    $submenu['edit.php'][10][0] = 'Add News';
+    echo '';
 }
-add_filter( 'body_class', 'gg_body_classes', 100 );
-
-
-
-
-function gg_remove_menus() {
-    
-    // Comments
-    remove_menu_page( 'edit-comments.php' );                 
-      
-    // remove default dashboard widgets
-	remove_meta_box('dashboard_right_now', 'dashboard', 'core');
-	remove_meta_box('dashboard_recent_comments', 'dashboard', 'core');
-	remove_meta_box('dashboard_incoming_links', 'dashboard', 'core');
-	remove_meta_box('dashboard_plugins', 'dashboard', 'core');
-	remove_meta_box('dashboard_activity', 'dashboard', 'normal');
-	remove_meta_box('dashboard_quick_press', 'dashboard', 'core');
-	remove_meta_box('dashboard_recent_drafts', 'dashboard', 'core');
-	remove_meta_box('dashboard_primary', 'dashboard', 'core');
-	remove_meta_box('dashboard_secondary', 'dashboard', 'core');
-	remove_meta_box('tribe_dashboard_widget', 'dashboard', 'normal');    
+function ggstyle_change_post_object_label() {
+        global $wp_post_types;
+        $labels = &$wp_post_types['post']->labels;
+        $labels->name = 'News';
+        $labels->singular_name = 'News';
+        $labels->add_new = 'Add News';
+        $labels->add_new_item = 'Add News';
+        $labels->edit_item = 'Edit News';
+        $labels->new_item = 'News';
+        $labels->view_item = 'View News';
+        $labels->search_items = 'Search News';
+        $labels->not_found = 'No News found';
+        $labels->not_found_in_trash = 'No News found in Trash';
 }
-add_action( 'admin_menu', 'gg_remove_menus' );
-
-
-function goodbye_dolly() {
-    if (file_exists(WP_PLUGIN_DIR.'/hello.php')) {
-        require_once(ABSPATH.'wp-admin/includes/plugin.php');
-        require_once(ABSPATH.'wp-admin/includes/file.php');
-        delete_plugins(array('hello.php'));
-    }
-    if(file_exists(WP_PLUGIN_DIR.'/akismet/akismet.php')) {
-        require_once(ABSPATH.'wp-admin/includes/plugin.php');
-        require_once(ABSPATH.'wp-admin/includes/file.php');
-        delete_plugins(array('akismet'));        
-    }
-}
-
-add_action('admin_init','goodbye_dolly');
-
+add_action( 'init', 'ggstyle_change_post_object_label' );
+add_action( 'admin_menu', 'ggstyle_change_post_menu_label' );
 
 
 /**
- * Include the TGM_Plugin_Activation class.
+ * Implement the Custom Header feature.
  */
-require_once dirname( __FILE__ ) . '/inc/class-tgm-plugin-activation.php';
+require get_template_directory() . '/inc/custom-header.php';
 
-add_action( 'tgmpa_register', 'gg_register_required_plugins' );
+/**
+ * Custom template tags for this theme.
+ */
+require get_template_directory() . '/inc/template-tags.php';
 
+/**
+ * Custom functions that act independently of the theme templates.
+ */
+require get_template_directory() . '/inc/extras.php';
 
-function gg_register_required_plugins() {
-    
-    $plugins = array(
-    
-    	array(
-    		'name'      => 'Advanced Custom Fields Pro',
-    		'slug'      => 'advanced-custom-fields-pro',
-    		'source'    => 'https://github.com/wp-premium/advanced-custom-fields-pro/archive/master.zip'
-    	),
-    	
-    	array(
-    		'name'      => 'Gravity Forms',
-    		'slug'      => 'gravity-forms',
-    		'source'    => 'https://github.com/wp-premium/gravityforms/archive/master.zip'
-    	)
-    );
-	
-	tgmpa( $plugins );
-}
+/**
+ * Customizer additions.
+ */
+require get_template_directory() . '/inc/customizer.php';
 
-
-function gg_the_archive_title($title) {
-    
-    if ( is_post_type_archive() ) {
-        $title = sprintf( __( '%s' ), post_type_archive_title( '', false ) );
-    } elseif ( is_tax() ) {
-        $tax = get_taxonomy( get_queried_object()->taxonomy );
-        /* translators: 1: Taxonomy singular name, 2: Current taxonomy term */
-        $title = sprintf( __( '%2$s' ), $tax->labels->singular_name, single_term_title( '', false ) );
-    }
-    
-    return $title;
-}
-add_filter('get_the_archive_title', 'gg_the_archive_title');
+/**
+ * Load Jetpack compatibility file.
+ */
+require get_template_directory() . '/inc/jetpack.php';

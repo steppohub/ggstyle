@@ -1,20 +1,28 @@
-<footer class="footer">
+<?php
+/**
+ * The template for displaying the footer.
+ *
+ * Contains the closing of the #content div and all content after.
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *
+ * @package ggstyle
+ */
 
-<div class="container">
-    <p class="alignleft">&copy; Copyright 2016, <a href="<?php echo esc_url(home_url()); ?>">Volunteers for Libraries</a>. All rights reserved.</p>
-    
-    <nav class="footerMenu">
-        <h4 class="footerMenu__title">Menu</h4>
-        <?php wp_nav_menu('container=&menu_class=footerMenu__list'); ?>
-    </ul>
-    
-</div>
+?>
 
-</footer><!-- .footer -->
+	</div><!-- #content -->
 
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+			<?php printf( esc_html__( 'Copyright &copy; %1$s %2$s. All rights reserved.', 'ggstyle' ), date('Y'), "<a href='".esc_url(home_url('/'))."'>".get_bloginfo('name')."</a>" ); ?>
+			<span class="sep"> | </span>
+			<?php printf( esc_html__( 'Website by %1$s.', 'ggstyle' ), '<a href="http://greengraphics.com.au/" rel="designer" target="_blank">greenGraphics</a>' ); ?>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
 
 <?php wp_footer(); ?>
-
 
 </body>
 </html>

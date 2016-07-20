@@ -1,37 +1,35 @@
-<?php get_header(); ?>
-<main class="main">
-					
-	
-	<div class="left">
-	
-	
-	<?php    	
-		if (have_posts()) : while (have_posts()) : the_post(); 		
+<?php
+/**
+ * The template for displaying all single posts.
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
+ *
+ * @package ggstyle
+ */
 
+get_header(); ?>
 
-        echo '<article class="content content--noPad">';
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
 
-            the_content();
+		<?php
+		while ( have_posts() ) : the_post();
 
-        echo '</article>';
+			get_template_part( 'template-parts/content', get_post_format() );
 
+			the_post_navigation();
 
-        endwhile; 
-    ?>
+			// If comments are open or we have at least one comment, load up the comment template.
+			if ( comments_open() || get_comments_number() ) :
+				comments_template();
+			endif;
 
+		endwhile; // End of the loop.
+		?>
 
-	<?php else : ?>
+		</main><!-- #main -->
+	</div><!-- #primary -->
 
-		<h2 class="center">Not Found</h2>
-	
-	<?php endif; ?>
-
-
-    </div>
-
-
-    <?php get_sidebar(); ?>
-    
-
-</main><!-- .main -->
-<?php get_footer(); ?>
+<?php
+get_sidebar();
+get_footer();
