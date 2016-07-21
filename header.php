@@ -28,15 +28,16 @@
 		<div class="site-branding">
 			<?php
     			
-			$site_logo = get_theme_mod('site_logo');    			
+			$site_logo = get_theme_mod('custom_logo');    			
 			if($site_logo) :
+				$site_logo = wp_get_attachment_image_src( $site_logo , ‘full’ );
 			
 			    if( is_front_page() && is_home() ) :
 			    
-    			    echo "<h1 class='site-title'><a href='".esc_url(home_url('/'))."' rel='home'><img alt='".get_bloginfo('name')."' src='$site_logo'></a></h1>";
+    			    echo "<h1 class='site-title'><a href='".esc_url(home_url('/'))."' rel='home'><img alt='".get_bloginfo('name')."' src='$site_logo[0]'></a></h1>";
 			    else :
 			    
-    			    echo "<p class='site-title'><a href='".esc_url(home_url('/'))."' rel='home'><img alt='".get_bloginfo('name')."' src='$site_logo'></a></p>";
+    			    echo "<p class='site-title'><a href='".esc_url(home_url('/'))."' rel='home'><img alt='".get_bloginfo('name')."' src='$site_logo[0]'></a></p>";
 			    
 			    endif;
 			    
