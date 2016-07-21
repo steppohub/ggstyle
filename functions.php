@@ -71,6 +71,12 @@ function ggstyle_setup() {
 		'link',
 	) );
 
+	/*
+	 * Enable theme support Theme Logo
+	 * See https://codex.wordpress.org/Theme_Logo
+	 */
+	add_theme_support( 'custom-logo' );
+
 	// Set up the WordPress core custom background feature.
 	add_theme_support( 'custom-background', apply_filters( 'ggstyle_custom_background_args', array(
 		'default-color' => 'ffffff',
@@ -125,37 +131,6 @@ function ggstyle_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'ggstyle_scripts' );
-
-
-function ggstyle_register_post_types() {
-	$labels = array(
-		"name"          => __( 'Projects', 'ggstyle' ),
-		"singular_name" => __( 'Project', 'ggstyle' ),
-	);
-	$args = array(
-		"labels" => $labels,
-		"public" => true,
-		"show_ui" => true,
-		"has_archive" => true,
-		"show_in_menu" => true,
-		"capability_type" => "post",
-		"hierarchical" => false,				
-		"supports" => array( "title", "editor", "revisions" ),				
-	);
-	register_post_type( "projects", $args );
-	
-	$cat_labels = array(
-        'name'          => _x( 'Projects Categories', 'taxonomy general name' ),
-		'singular_name' => _x( 'Projects Category', 'taxonomy singular name' ),	
-	);
-	$cat_args = array(
-    	'labels' => $cat_labels,
-        'rewrite' => array( 'slug' => 'projects-cat' ),
-		'hierarchical' => true,    	
-	);
-	register_taxonomy( 'projects_cat', 'projects', $cat_args );
-}
-add_action( 'init', 'ggstyle_register_post_types' );
 
 
 function ggstyle_remove_menus() {

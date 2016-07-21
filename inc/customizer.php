@@ -11,33 +11,10 @@
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
 function ggstyle_customize_register( $wp_customize ) {
-    
-    
-    $wp_customize->add_setting( 'site_logo', array(
-        'default'               => '',
-        'type'                  => 'theme_mod',
-        'sanitize_callback'     => '',
-        'sanitize_js_callback'  => ''
-    ) );
-    
-    
-	$wp_customize->add_control( new WP_Customize_Upload_Control(
-	    $wp_customize,
-	    'ggstyle_site_logo', //Set a unique ID for the control
-	    array(
-        	'label'     => __( 'Site Logo', 'ggstyle' ),
-        	'description' => __( 'Site Logo used to brand your website, will display at the top of the page and overwrite Site Title and Tagline. Logo should be at least <b>300</b> pixels wide.', 'ggstyle' ),
-        	'section'   => 'title_tagline',
-        	'type'      => 'image',
-        	'priority'  => 40,
-        	'settings'  => 'site_logo',
-	) ) );    
-    
-    
+
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
-	$wp_customize->get_setting( 'site_logo' )->transport        = 'postMessage';
 }
 add_action( 'customize_register', 'ggstyle_customize_register' );
 
