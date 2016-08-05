@@ -31,9 +31,9 @@
             if ($site_logo) :
                 // Custom logo
                 if (is_front_page() || is_home()) :
-                    echo "<h1 class='site-title'><a href='".esc_url(home_url('/'))."' rel='home'><img alt='".get_bloginfo('name')."' src='$site_logo'></a></h1>";
+                    echo "<h1 class='site-title'>$site_logo</h1>";
                 else :
-                    echo "<p class='site-title'><a href='".esc_url(home_url('/'))."' rel='home'><img alt='".get_bloginfo('name')."' src='$site_logo'></a></p>";
+                    echo "<p class='site-title'>$site_logo</p>";
                 endif;
             else :
                 // No custom logo
