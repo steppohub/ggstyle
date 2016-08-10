@@ -27,7 +27,7 @@
     <header id="masthead" class="site-header" role="banner">
         <div class="site-branding">
             <?php
-            $site_logo = get_theme_mod('site_logo');
+            $site_logo = get_custom_logo();
             if ($site_logo) :
                 // Custom logo
                 if (is_front_page() || is_home()) :
