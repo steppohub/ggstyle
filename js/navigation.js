@@ -5,8 +5,7 @@
  * navigation support for dropdown menus.
  */
 ( function() {
-    var container, button, menu, links, subMenus, i, len, close;
-    var $ = jQuery;
+    var container, button, menu, links, subMenus, i, len;
 
     container = document.getElementById( 'site-navigation' );
     if ( ! container ) {
@@ -15,11 +14,6 @@
 
     button = container.getElementsByTagName( 'button' )[0];
     if ( 'undefined' === typeof button ) {
-        return;
-    }
-    
-    close = container.getElementsByClassName( 'nav-close' )[0];
-    if ( 'undefined' === typeof close ) {
         return;
     }
 
@@ -39,31 +33,28 @@
     button.onclick = function() {
         if ( -1 !== container.className.indexOf( 'toggled' ) ) {
             container.className = container.className.replace( ' toggled', '' );
+            button.className = button.className.replace( ' toggled', '');
             button.setAttribute( 'aria-expanded', 'false' );
             menu.setAttribute( 'aria-expanded', 'false' );
         } else {
             container.className += ' toggled';
+            button.className += ' toggled';
             button.setAttribute( 'aria-expanded', 'true' );
             menu.setAttribute( 'aria-expanded', 'true' );
         }
     };
-    
-    close.onclick = function() {
-        container.className = container.className.replace( ' toggled', '' );
-        button.setAttribute( 'aria-expanded', 'false' );
-        menu.setAttribute( 'aria-expanded', 'false' );
-    }
-    
-    window.onclick = function(e) {
-        if ( 
-            -1 !== container.className.indexOf( 'toggled' ) &&
-            1 !== $(e.target).parents( '.main-navigation' ).length
-        ) {
+
+    // Close menu if click isn't on container
+    document.addEventListener('click', function(event) {
+        var isClickInside = container.contains(event.target);
+
+        if (! isClickInside) {
             container.className = container.className.replace( ' toggled', '' );
+            button.className = button.className.replace( ' toggled', '');
             button.setAttribute( 'aria-expanded', 'false' );
             menu.setAttribute( 'aria-expanded', 'false' );
-        }       
-    }
+        }
+    });
 
     // Get all the link elements within the menu.
     links    = menu.getElementsByTagName( 'a' );
