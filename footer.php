@@ -17,7 +17,7 @@
 		<div class="site-info">
 			<?php printf( esc_html__( 'Copyright &copy; %1$s %2$s. All rights reserved.', 'ggstyle' ), date('Y'), "<a href='".esc_url(home_url('/'))."'>".get_bloginfo('name')."</a>" ); ?>
 			<span class="sep"> | </span>
-			<?php printf( esc_html__( 'Website by %1$s.', 'ggstyle' ), '<a href="http://greengraphics.com.au/" rel="designer" target="_blank">greenGraphics</a>' ); ?>
+			<?php printf( esc_html__( 'Website by %1$s.', 'ggstyle' ), '<a href="http://greengraphics.com.au/" rel="designer" target="_blank">Greengraphics</a>' ); ?>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
