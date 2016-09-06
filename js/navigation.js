@@ -5,7 +5,7 @@
  * navigation support for dropdown menus.
  */
 ( function() {
-    var container, button, menu, links, subMenus, i, len;
+    var container, button, menu, close, links, subMenus, i, len;
 
     container = document.getElementById( 'site-navigation' );
     if ( ! container ) {
@@ -16,6 +16,11 @@
     if ( 'undefined' === typeof button ) {
         return;
     }
+
+    close = container.getElementsByClassName('nav-close')[0];
+    if ( 'undefined' === typeof button ) {
+        return;
+    }    
 
     menu = container.getElementsByTagName( 'ul' )[0];
 
@@ -42,6 +47,15 @@
             button.setAttribute( 'aria-expanded', 'true' );
             menu.setAttribute( 'aria-expanded', 'true' );
         }
+    };
+
+    close.onclick = function() {
+        if ( -1 !== container.className.indexOf( 'toggled' ) ) {
+            container.className = container.className.replace( ' toggled', '' );
+            button.className = button.className.replace( ' toggled', '');
+            button.setAttribute( 'aria-expanded', 'false' );
+            menu.setAttribute( 'aria-expanded', 'false' );
+        }        
     };
 
     // Close menu if click isn't on container
