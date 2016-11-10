@@ -367,6 +367,11 @@ body {
     background: #fff; /* Fallback for when there is no custom background color defined. */
 }
 
+:focus,
+:active {
+    outline: none;
+}
+
 blockquote:before,
 blockquote:after,
 q:before,
