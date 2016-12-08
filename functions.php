@@ -189,11 +189,16 @@ add_action('admin_menu', 'ggstyle_change_post_menu_label');
 /**
  * Put GG link on Wp-admin footer.
  */
+ if ( ! function_exists( 'remove_footer_gg' ) ) {
+ 
 function remove_footer_admin()
 {
     echo 'Site made proudly by <a href="http://www.greengraphics.com.au">Greengraphics</a>.';
 }
 add_filter('admin_footer_text', 'remove_footer_admin');
+
+}
+
 
 /**
  * Implement the Custom Header feature.
