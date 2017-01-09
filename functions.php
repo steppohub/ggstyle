@@ -42,7 +42,9 @@ function ggstyle_setup()
 
     // This theme uses wp_nav_menu() in one location.
     register_nav_menus(array(
-        'primary' => esc_html__('Primary', 'ggstyle'),
+        'primary'   => esc_html__('Primary', 'ggstyle'),
+        'secondary' => esc_html__('Secondary', 'ggstyle'), // Sidebar menu
+        'footer'    => esc_html__('Footer', 'ggstyle')
     ));
 
     /*
@@ -124,7 +126,6 @@ add_action('widgets_init', 'ggstyle_widgets_init');
  */
 function ggstyle_scripts()
 {
-    wp_enqueue_style('bootstrap-css', get_template_directory_uri().'/css/bootstrap.css');
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:300,300i,400,400i,700,700i');
     wp_enqueue_style('ggstyle-style', get_stylesheet_uri());
 
@@ -189,15 +190,12 @@ add_action('admin_menu', 'ggstyle_change_post_menu_label');
 /**
  * Put GG link on Wp-admin footer.
  */
- if ( ! function_exists( 'remove_footer_gg' ) ) {
- 
-function remove_footer_admin()
+function ggstyle_remove_footer_admin()
 {
     echo 'Site made proudly by <a href="http://www.greengraphics.com.au">Greengraphics</a>.';
 }
-add_filter('admin_footer_text', 'remove_footer_admin');
+add_filter('admin_footer_text', 'ggstyle_remove_footer_admin');
 
-}
 
 
 /**

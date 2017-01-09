@@ -25,6 +25,8 @@
     <a class="skip-link screen-reader-text" href="#main"><?php esc_html_e('Skip to content', 'ggstyle'); ?></a>
 
     <header id="masthead" class="site-header" role="banner">
+    <div class="container">
+
         <div class="site-branding">
             <?php
             $site_logo = get_custom_logo();
@@ -60,6 +62,8 @@
             </button>
             <?php wp_nav_menu(array( 'theme_location' => 'primary', 'menu_id' => 'primary-menu' )); ?>
         </nav><!-- #site-navigation -->
+        
+    </div><!-- .containre -->
     </header><!-- #masthead -->
 
     <div id="content" class="site-content">
