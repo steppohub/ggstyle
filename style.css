@@ -670,43 +670,6 @@ nav a {
 }
 
 
-
-.nav-header {
-    display: block;
-    padding: 16px;
-    position: relative;
-}
-.nav-logo {
-    margin: 0 auto;
-    max-width: 80%;
-}
-.nav-close {
-    color: white;
-    cursor: pointer;
-    position: absolute;
-    top: 8px; right: 8px;
-    height: 20px;
-    width: 20px;
-}
-
-.nav-header {
-    display: block;
-    padding: 16px;
-    position: relative;
-}
-.nav-logo {
-    margin: 0 auto;
-    max-width: 80%;
-}
-.nav-close {
-    color: white;
-    cursor: pointer;
-    position: absolute;
-    top: 8px; right: 8px;
-    height: 20px;
-    width: 20px;
-}
-
 /* Small menu. */
 .menu-toggle {
     background-color: transparent;
@@ -826,8 +789,7 @@ nav a {
 }
 
 @media screen and (max-width: 768px) {
-    .menu-toggle,
-    .nav-header {
+    .menu-toggle {
         display: block;
     }
     .main-navigation .menu {
