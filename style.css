@@ -4,7 +4,7 @@ Theme URI: http://www.greengraphics.com.au
 Author: Greengraphics
 Author URI: http://www.greengraphics.com.au
 Description: Description
-Version: 1.0.0
+Version: 1.0.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: ggstyle
@@ -31,7 +31,6 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
     ## Links
     ## Menusf
 # Accessibility
-# Layouts
 # Alignments
 # Clearings
 # Widgets
@@ -40,9 +39,13 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
     ## Asides
     ## Comments
 # Infinite scroll
+# Loader
 # Media
     ## Captions
     ## Galleries
+# Layouts
+# CustomCSS
+# Responsive
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
@@ -291,6 +294,7 @@ h5,
 h6 {
     clear: both;
     font-family: 'Futura BT', 'futura-pt', 'Open Sans', sans-serif;
+    line-height: 1.2;
 }
 
 p {
@@ -441,8 +445,6 @@ input[type="submit"] {
     -webkit-border-radius: 3px;
             border-radius: 3px;
     background: #e6e6e6;
-    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 15px 17px rgba(255, 255, 255, 0.5), inset 0 -5px 12px rgba(0, 0, 0, 0.05);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 15px 17px rgba(255, 255, 255, 0.5), inset 0 -5px 12px rgba(0, 0, 0, 0.05);
     color: rgba(0, 0, 0, .8);
     font-size: 12px;
     font-size: 0.75rem;
@@ -456,8 +458,6 @@ input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
     border-color: #ccc #bbb #aaa;
-    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 15px 17px rgba(255, 255, 255, 0.8), inset 0 -5px 12px rgba(0, 0, 0, 0.02);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 15px 17px rgba(255, 255, 255, 0.8), inset 0 -5px 12px rgba(0, 0, 0, 0.02);
 }
 
 button:focus,
@@ -469,8 +469,6 @@ input[type="button"]:active,
 input[type="reset"]:active,
 input[type="submit"]:active {
     border-color: #aaa #bbb #bbb;
-    -webkit-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.15);
-            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 input[type="text"],
@@ -550,6 +548,8 @@ textarea {
 a {
     color: black;
     text-decoration: none;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 a:hover,
@@ -580,8 +580,6 @@ nav a {
     text-transform: uppercase;
     margin: 0 30px;
     padding: 8px 0;
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
 }
 
 .main-navigation {
@@ -613,7 +611,6 @@ nav a {
 
 .main-navigation a {
     display: block;
-    text-decoration: none;
 }
 
 .main-navigation ul ul {
@@ -1053,6 +1050,63 @@ nav a {
 }
 
 /*--------------------------------------------------------------
+# Loader
+--------------------------------------------------------------*/
+.load-me {
+    overflow: hidden;
+    position: relative;
+}
+
+.load-me::before {
+    content: url('inc/img/loader.svg');
+    display: block;
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    opacity: 1;
+    top: 50%;
+    left: 50%;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+}
+
+.load-me::after {
+    content: '';
+    display: block;
+    background-color: rgba(255, 255, 255, 0.3);
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+
+.loaded .load-me::before,
+.loaded .load-me::after {
+    opacity: 0;
+    z-index: -9999px;
+}
+
+.load-me * {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+    opacity: 0;
+    -webkit-transition: all 0.3s 0.6s ease;
+    transition: all 0.3s 0.6s ease;
+}
+
+.loaded .load-me * {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+}
+
+/*--------------------------------------------------------------
 # Media
 --------------------------------------------------------------*/
 .page-content .wp-smiley,
@@ -1144,5 +1198,110 @@ object {
 }
 
 /*--------------------------------------------------------------
-## Custom CSS
+# Layouts
+--------------------------------------------------------------*/
+.text-left {
+    text-align: left;
+}
+.text-center {
+    text-align: center;
+}
+.text-right {
+    text-align: right;
+}
+
+.inline {
+    display: inline;
+}
+.inline-block {
+    display: inline-block;
+}
+.block {
+    display: block;
+}
+
+
+
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 16px;
+    position: relative;
+}
+.container::before, .container::after {clear: both; content: ''; display: table;}
+
+.row {
+    margin: 0 -16px;
+    position: relative;
+}
+.row::before, .row::after {clear: both; content: ''; display: table;}
+
+[class*='col-'] {
+    float: left;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.col-1,
+.col-sm-1 {width: 8.333%;}
+.col-2,
+.col-sm-2 {width: 16.667%;}
+.col-3,
+.col-sm-3 {width: 25%;}
+.col-4,
+.col-sm-4 {width: 33.333%;}
+.col-5,
+.col-sm-5 {width: 41.667%;}
+.col-6,
+.col-sm-6 {width: 50%;}
+.col-7,
+.col-sm-7 {width: 58.333%;}
+.col-8,
+.col-sm-8 {width: 66.667%;}
+.col-9,
+.col-sm-9 {width: 75%;}
+.col-10,
+.col-sm-10 {width: 83.333%;}
+.col-11,
+.col-sm-11 {width: 91.667%;}
+.col-12,
+.col-sm-12 {width: 100%;}
+
+@media screen and (min-width: 560px) {
+    .col-md-1 {width: 8.333%;}
+    .col-md-2 {width: 16.667%;}
+    .col-md-3 {width: 25%;}
+    .col-md-4 {width: 33.333%;}
+    .col-md-5 {width: 41.667%;}
+    .col-md-6 {width: 50%;}
+    .col-md-7 {width: 58.333%;}
+    .col-md-8 {width: 66.667%;}
+    .col-md-9 {width: 75%;}
+    .col-md-10 {width: 83.333%;}
+    .col-md-11 {width: 91.667%;}
+    .col-md-12 {width: 100%;} 
+}
+
+@media screen and (min-width: 768px) {
+    .col-lg-1 {width: 8.333%;}
+    .col-lg-2 {width: 16.667%;}
+    .col-lg-3 {width: 25%;}
+    .col-lg-4 {width: 33.333%;}
+    .col-lg-5 {width: 41.667%;}
+    .col-lg-6 {width: 50%;}
+    .col-lg-7 {width: 58.333%;}
+    .col-lg-8 {width: 66.667%;}
+    .col-lg-9 {width: 75%;}
+    .col-lg-10 {width: 83.333%;}
+    .col-lg-11 {width: 91.667%;}
+    .col-lg-12 {width: 100%;}
+}
+
+/*--------------------------------------------------------------
+# Custom CSS
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Responsive
 --------------------------------------------------------------*/
