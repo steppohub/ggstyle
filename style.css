@@ -156,6 +156,8 @@ img {
 }
 
 svg:not(:root) {
+    display: block;
+    max-width: 100%;
     overflow: hidden;
 }
 
@@ -1239,8 +1241,12 @@ object {
 
 [class*='col-'] {
     float: left;
+    margin-bottom: 16px;
     padding-left: 16px;
     padding-right: 16px;
+}
+[class*='col-']:last-child {
+    margin-bottom: 0;
 }
 
 .col-1,
@@ -1283,7 +1289,7 @@ object {
     .col-md-12 {width: 100%;} 
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
     .col-lg-1 {width: 8.333%;}
     .col-lg-2 {width: 16.667%;}
     .col-lg-3 {width: 25%;}
