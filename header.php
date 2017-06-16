@@ -28,30 +28,7 @@
     <div class="container">
 
         <div class="site-branding">
-            <?php
-            $site_logo = get_custom_logo();
-            if ($site_logo) :
-                // Custom logo
-                if (is_front_page() || is_home()) :
-                    echo "<h1 class='site-title'>$site_logo</h1>";
-                else :
-                    echo "<p class='site-title'>$site_logo</p>";
-                endif;
-            else :
-                // No custom logo
-                if (is_front_page() || is_home()) :
-                    echo "<h1 class='site-title'><a href='".esc_url(home_url('/'))."' rel='home'>".get_bloginfo('name')."</a></h1>";
-                else :
-                    echo "<p class='site-title'><a href='".esc_url(home_url('/'))."' rel='home'>".get_bloginfo('name')."</a></p>";
-                endif;
-            endif; // $site_logo
-
-            $description = get_bloginfo('description', 'display');
-            if ($description || is_customize_preview()) : ?>
-                <p class="site-description"><?php echo $description; /* WPCS: xss ok. */ ?></p>
-            <?php
-            endif;
-            ?>
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="<?php echo get_template_directory_uri(); ?>/img/logo.png"></a>
         </div><!-- .site-branding -->
 
         <nav id="site-navigation" class="main-navigation" role="navigation">
